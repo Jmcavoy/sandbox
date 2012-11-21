@@ -1,0 +1,1762 @@
+Last login: Wed Nov  7 15:06:51 on ttys000
+Justin-Mcavoys-MacBook:~ wahookeeper$ mysql -u root
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 29
+Server version: 5.1.44 Source distribution
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> creat database bank;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'creat database bank' at line 1
+mysql> create database bank;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> use bank
+Database changed
+mysql> /* begin table creation */
+mysql> 
+mysql> create table department
+    ->  (dept_id smallint unsigned not null auto_increment,
+    ->   name varchar(20) not null,
+    ->   constraint pk_department primary key (dept_id)
+    ->  );
+
+create table branch
+ (branch_id smallint unsigned not null auto_increment,
+  name varchar(20) not null,
+  address varchar(30),
+  city varchar(20),
+  state varchar(2),
+  zip varchar(12),
+  constraint pk_branch primary key (branch_id)
+ );
+
+create table employee
+ (emp_id smallint unsigned not null auto_increment,
+  fname varchar(20) not null,
+  lname varchar(20) not null,
+  start_date date not null,
+  end_date date,
+  superior_emp_id smallint unsigned,
+  dept_id smallint unsigned,
+  title varchar(20),
+  assigned_branch_id smallint unsigned,
+  constraint fk_e_emp_id 
+    foreign key (superior_emp_id) references employee (emp_id),
+  constraint fk_dept_id
+    foreign key (dept_id) references department (dept_id),
+  constraint fk_e_branch_id
+    foreign key (assigned_branch_id) references branch (branch_id),
+  constraint pk_employee primary key (emp_id)
+ );
+
+create table product_type
+ (product_type_cd varchar(10) not null,
+  name varchar(50) not null,
+  constraint pk_product_type prQuery OK, 0 rows affected (0.11 sec)
+
+mysql> 
+mysql> create table branch
+    ->  (branch_id smallint unsigned not null auto_increment,
+    ->   name varchar(20) not null,
+    ->   address varchar(30),
+    ->   city varchar(20),
+    ->   state varchar(2),
+    ->   zip varchar(12),
+    ->   constraint pk_branch primary key (branch_id)
+    ->  );
+
+create table employee
+ (emp_id smallint unsigned not null auto_increment,
+  fname varchar(20) not null,
+  lname varchar(20) not null,
+  start_date date not null,
+  end_date date,
+  superior_emp_id smallint unsigned,
+  dept_id smallint unsigned,
+  title varchar(20),
+  assigned_branch_id smallint unsigned,
+  constraint fk_e_emp_id 
+    foreign key (superior_emp_id) references employee (emp_id),
+  constraint fk_dept_id
+    foreign key (dept_id) references department (dept_id),
+  constraint fk_e_branch_id
+    foreign key (assigned_branch_id) references branch (branch_id),
+  constraint pk_employee primary key (emp_id)
+ );
+
+create table product_type
+ (product_type_cd varchar(10) not null,
+  name varchar(50) not null,
+  constraint pk_product_type primary key (product_type_cd)
+ );
+
+create table product
+ (product_cd varchar(10) not null,
+  name varchar(50) not null,
+  product_type_cd varchar(10) not null,
+  date_offered date,
+  date_retired date,
+  constraint fk_product_type_cd foreignQuery OK, 0 rows affected (0.17 sec)
+
+mysql> 
+mysql> create table employee
+    ->  (emp_id smallint unsigned not null auto_increment,
+    ->   fname varchar(20) not null,
+    ->   lname varchar(20) not null,
+    ->   start_date date not null,
+    ->   end_date date,
+    ->   superior_emp_id smallint unsigned,
+    ->   dept_id smallint unsigned,
+    ->   title varchar(20),
+    ->   assigned_branch_id smallint unsigned,
+    ->   constraint fk_e_emp_id 
+    ->     foreign key (superior_emp_id) references employee (emp_id),
+    ->   constraint fk_dept_id
+    ->     foreign key (dept_id) references department (dept_id),
+    ->   constraint fk_e_branch_id
+    ->     foreign key (assigned_branch_id) references branch (branch_id),
+    ->   constraint pk_employee primary key (emp_id)
+    ->  );
+
+create table product_type
+ (product_type_cd varchar(10) not null,
+  name varchar(50) not null,
+  constraint pk_product_type primary key (product_type_cd)
+ );
+
+create table product
+ (product_cd varchar(10) not null,
+  name varchar(50) not null,
+  product_type_cd varchar(10) not null,
+  date_offered date,
+  date_retired date,
+  constraint fk_product_type_cd foreign key (product_type_cd) 
+    references product_type (product_type_cd),
+  constraint pk_product primary key (product_cd)
+ );
+
+create table customer
+ (cust_id integer unsigned not null auto_increment,
+  fed_id varchar(12) not null,
+  cust_type_cd enum('I','B') not null,
+  address varchar(30),
+  city varchar(20),
+  state varchar(20),
+  postal_code varchar(10),
+  constraint pk_customer primary key (cust_id)
+ );
+
+create table individual
+ (cust_id integer unsigned not null,
+  fname varchar(30) not null,
+  lname varchar(30) not null,
+  birth_date date,
+  constraint fk_i_cust_id foreign key (cust_id)
+    references customerQuery OK, 0 rows affected (0.08 sec)
+
+mysql> 
+mysql> create table product_type
+    ->  (product_type_cd varchar(10) not null,
+    ->   name varchar(50) not null,
+    ->   constraint pk_product_type primary key (product_type_cd)
+    ->  );
+
+create table product
+ (product_cd varchar(10) not null,
+  name varchar(50) not null,
+  product_type_cd varchar(10) not null,
+  date_offered date,
+  date_retired date,
+  constraint fk_product_type_cd foreign key (product_type_cd) 
+    references product_type (product_type_cd),
+  constraint pk_product primary key (product_cd)
+ );
+
+create table customer
+ (cust_id integer unsigned not null auto_increment,
+  fed_id varchar(12) not null,
+  cust_type_cd enum('I','B') not null,
+  address varchar(30),
+  city varchar(20),
+  state varchar(20),
+  postal_code varchar(10),
+  constraint pk_customer primary key (cust_id)
+ );
+
+create table individual
+ (cust_id integer unsigned not null,
+  fname varchar(30) not null,
+  lname varchar(30) not null,
+  birth_date date,
+  constraint fk_i_cust_id foreign key (cust_id)
+    references customer (cust_id),
+  constraint pk_individual primary key (cust_id)
+ );
+
+create table business
+ (cust_id integer unsigned not null,
+  name varchar(40) not null,
+  stQuery OK, 0 rows affected (0.10 sec)
+
+mysql> 
+mysql> create table product
+    ->  (product_cd varchar(10) not null,
+    ->   name varchar(50) not null,
+    ->   product_type_cd varchar(10) not null,
+    ->   date_offered date,
+    ->   date_retired date,
+    ->   constraint fk_product_type_cd foreign key (product_type_cd) 
+    ->     references product_type (product_type_cd),
+    ->   constraint pk_product primary key (product_cd)
+    ->  );
+
+create table customer
+ (cust_id integer unsigned not null auto_increment,
+  fed_id varchar(12) not null,
+  cust_type_cd enum('I','B') not null,
+  address varchar(30),
+  city varchar(20),
+  state varchar(20),
+  postal_code varchar(10),
+  constraint pk_customer primary key (cust_id)
+ );
+
+create table individual
+ (cust_id integer unsigned not null,
+  fname varchar(30) not null,
+  lname varchar(30) not null,
+  birth_date date,
+  constraint fk_i_cust_id foreign key (cust_id)
+    references customer (cust_id),
+  constraint pk_individual primary key (cust_id)
+ );
+
+create table business
+ (cust_id integer unsigned not null,
+  name varchar(40) not null,
+  state_id varchar(10) not null,
+  incorp_date date,
+  constraint fk_b_cust_id foreign key (cust_id)
+    references customer (cust_id),
+  constraint pk_business primary key (cust_id)
+ );
+
+create table officer
+ (officer_id smallint unsigned not null auto_increment,
+  cust_id integer unsigned not null,
+  fname varchar(30) not null,
+  lQuery OK, 0 rows affected (0.09 sec)
+
+mysql> 
+mysql> create table customer
+    ->  (cust_id integer unsigned not null auto_increment,
+    ->   fed_id varchar(12) not null,
+    ->   cust_type_cd enum('I','B') not null,
+    ->   address varchar(30),
+    ->   city varchar(20),
+    ->   state varchar(20),
+    ->   postal_code varchar(10),
+    ->   constraint pk_customer primary key (cust_id)
+    ->  );
+
+create table individual
+ (cust_id integer unsigned not null,
+  fname varchar(30) not null,
+  lname varchar(30) not null,
+  birth_date date,
+  constraint fk_i_cust_id foreign key (cust_id)
+    references customer (cust_id),
+  constraint pk_individual primary key (cust_id)
+ );
+
+create table business
+ (cust_id integer unsigned not null,
+  name varchar(40) not null,
+  state_id varchar(10) not null,
+  incorp_date date,
+  constraint fk_b_cust_id foreign key (cust_id)
+    references customer (cust_id),
+  constraint pk_business primary key (cust_id)
+ );
+
+create table officer
+ (officer_id smallint unsigned not null auto_increment,
+  cust_id integer unsigned not null,
+  fname varchar(30) not null,
+  lname varchar(30) not null,
+  title varchar(20),
+  start_date date not null,
+  end_date date,
+  constraint fk_o_cust_id foreign key (cust_id)
+    references business (cust_id),
+  constraint pk_officer primary key (officer_id)
+ );
+
+create table account
+ (account_id integer unsigned not nulQuery OK, 0 rows affected (0.09 sec)
+
+mysql> 
+mysql> create table individual
+    ->  (cust_id integer unsigned not null,
+    ->   fname varchar(30) not null,
+    ->   lname varchar(30) not null,
+    ->   birth_date date,
+    ->   constraint fk_i_cust_id foreign key (cust_id)
+    ->     references customer (cust_id),
+    ->   constraint pk_individual primary key (cust_id)
+    ->  );
+
+create table business
+ (cust_id integer unsigned not null,
+  name varchar(40) not null,
+  state_id varchar(10) not null,
+  incorp_date date,
+  constraint fk_b_cust_id foreign key (cust_id)
+    references customer (cust_id),
+  constraint pk_business primary key (cust_id)
+ );
+
+create table officer
+ (officer_id smallint unsigned not null auto_increment,
+  cust_id integer unsigned not null,
+  fname varchar(30) not null,
+  lname varchar(30) not null,
+  title varchar(20),
+  start_date date not null,
+  end_date date,
+  constraint fk_o_cust_id foreign key (cust_id)
+    references business (cust_id),
+  constraint pk_officer primary key (officer_id)
+ );
+
+create table account
+ (account_id integer unsigned not null auto_increment,
+  product_cd varchar(10) not null,
+  cust_id integer unsigned not null,
+  open_date date not null,
+  close_date date,
+  last_activity_date date,
+  status enum('ACTIVE','CLOSED','FROZEN'),
+  open_branch_id smallint unsigned,
+  open_emp_id smallint unsigned,
+  aQuery OK, 0 rows affected (0.08 sec)
+
+mysql> 
+mysql> create table business
+    ->  (cust_id integer unsigned not null,
+    ->   name varchar(40) not null,
+    ->   state_id varchar(10) not null,
+    ->   incorp_date date,
+    ->   constraint fk_b_cust_id foreign key (cust_id)
+    ->     references customer (cust_id),
+    ->   constraint pk_business primary key (cust_id)
+    ->  );
+
+create table officer
+ (officer_id smallint unsigned not null auto_increment,
+  cust_id integer unsigned not null,
+  fname varchar(30) not null,
+  lname varchar(30) not null,
+  title varchar(20),
+  start_date date not null,
+  end_date date,
+  constraint fk_o_cust_id foreign key (cust_id)
+    references business (cust_id),
+  constraint pk_officer primary key (officer_id)
+ );
+
+create table account
+ (account_id integer unsigned not null auto_increment,
+  product_cd varchar(10) not null,
+  cust_id integer unsigned not null,
+  open_date date not null,
+  close_date date,
+  last_activity_date date,
+  status enum('ACTIVE','CLOSED','FROZEN'),
+  open_branch_id smallint unsigned,
+  open_emp_id smallint unsigned,
+  avail_balance float(10,2),
+  pending_balance float(10,2),
+  constraint fk_product_cd foreign key (product_cd)
+    references product (product_cd),
+  constraint fk_a_cust_id foreign key (cust_id)
+    references customer (cust_id),
+  constraint fk_a_branch_id foreign key (open_brancQuery OK, 0 rows affected (0.08 sec)
+
+mysql> 
+mysql> create table officer
+    ->  (officer_id smallint unsigned not null auto_increment,
+    ->   cust_id integer unsigned not null,
+    ->   fname varchar(30) not null,
+    ->   lname varchar(30) not null,
+    ->   title varchar(20),
+    ->   start_date date not null,
+    ->   end_date date,
+    ->   constraint fk_o_cust_id foreign key (cust_id)
+    ->     references business (cust_id),
+    ->   constraint pk_officer primary key (officer_id)
+    ->  );
+
+create table account
+ (account_id integer unsigned not null auto_increment,
+  product_cd varchar(10) not null,
+  cust_id integer unsigned not null,
+  open_date date not null,
+  close_date date,
+  last_activity_date date,
+  status enum('ACTIVE','CLOSED','FROZEN'),
+  open_branch_id smallint unsigned,
+  open_emp_id smallint unsigned,
+  avail_balance float(10,2),
+  pending_balance float(10,2),
+  constraint fk_product_cd foreign key (product_cd)
+    references product (product_cd),
+  constraint fk_a_cust_id foreign key (cust_id)
+    references customer (cust_id),
+  constraint fk_a_branch_id foreign key (open_branch_id)
+    references branch (branch_id),
+  constraint fk_a_emp_id foreign key (open_emp_id)
+    references employee (emp_id),
+  constraint pk_account primary key (account_id)
+ );
+
+create table transaction
+ (txn_id integer unsigned not null auto_increment,
+  txn_date datetime not null,
+  account_id integer unsigned not null,
+  txn_type_cd enum('DBT','CDT'),
+  amount double(10,Query OK, 0 rows affected (0.08 sec)
+
+mysql> 
+mysql> create table account
+    ->  (account_id integer unsigned not null auto_increment,
+    ->   product_cd varchar(10) not null,
+    ->   cust_id integer unsigned not null,
+    ->   open_date date not null,
+    ->   close_date date,
+    ->   last_activity_date date,
+    ->   status enum('ACTIVE','CLOSED','FROZEN'),
+    ->   open_branch_id smallint unsigned,
+    ->   open_emp_id smallint unsigned,
+    ->   avail_balance float(10,2),
+    ->   pending_balance float(10,2),
+    ->   constraint fk_product_cd foreign key (product_cd)
+    ->     references product (product_cd),
+    ->   constraint fk_a_cust_id foreign key (cust_id)
+    ->     references customer (cust_id),
+    ->   constraint fk_a_branch_id foreign key (open_branch_id)
+    ->     references branch (branch_id),
+    ->   constraint fk_a_emp_id foreign key (open_emp_id)
+    ->     references employee (emp_id),
+    ->   constraint pk_account primary key (account_id)
+    ->  );
+
+create table transaction
+ (txn_id integer unsigned not null auto_increment,
+  txn_date datetime not null,
+  account_id integer unsigned not null,
+  txn_type_cd enum('DBT','CDT'),
+  amount double(10,2) not null,
+  teller_emp_id smallint unsigned,
+  execution_branch_id smallint unsigned,
+  funds_avail_date datetime,
+  constraint fk_t_account_id foreign key (account_id)
+    references account (account_id),
+  constraint fk_teller_emp_id foreign key (teller_emp_id)
+    references employee (emp_id),
+  constraint fk_exec_branch_id foreign key (execution_branch_id)
+    references branch (branch_id),
+  constraint pk_transaction primary key (txn_id)
+ );
+
+/* end table creation */
+
+/* begin data population */
+
+/* department data */
+insert into department (dept_id, name)
+values (null, 'Operations');
+insert into department (dept_id, name)
+values (null, 'Loans');
+insert into department (dept_id, name)
+values (null, 'Administration');
+
+/* branch data */
+insert into branch (branch_id, name, adQuery OK, 0 rows affected (0.08 sec)
+
+mysql> 
+mysql> create table transaction
+    ->  (txn_id integer unsigned not null auto_increment,
+    ->   txn_date datetime not null,
+    ->   account_id integer unsigned not null,
+    ->   txn_type_cd enum('DBT','CDT'),
+    ->   amount double(10,2) not null,
+    ->   teller_emp_id smallint unsigned,
+    ->   execution_branch_id smallint unsigned,
+    ->   funds_avail_date datetime,
+    ->   constraint fk_t_account_id foreign key (account_id)
+    ->     references account (account_id),
+    ->   constraint fk_teller_emp_id foreign key (teller_emp_id)
+    ->     references employee (emp_id),
+    ->   constraint fk_exec_branch_id foreign key (execution_branch_id)
+    ->     references branch (branch_id),
+    ->   constraint pk_transaction primary key (txn_id)
+    ->  );
+
+/* end table creation */
+
+/* begin data population */
+
+/* department data */
+insert into department (dept_id, name)
+values (null, 'Operations');
+insert into department (dept_id, name)
+values (null, 'Loans');
+insert into department (dept_id, name)
+values (null, 'Administration');
+
+/* branch data */
+insert into branch (branch_id, name, address, city, state, zip)
+values (null, 'Headquarters', '3882 Main St.', 'Waltham', 'MA', '02451');
+insert into branch (branch_id, name, address, city, state, zip)
+values (null, 'Woburn Branch', '422 Maple St.', 'Woburn', 'MA', '01801');
+insert into branch (branch_id, name, address, city, state, zip)
+values (null, 'Quincy Branch', '125 Presidential Way', 'Quincy', 'MA', '02169');
+insert into branch (branch_id, name, address, city, state, zip)
+values (null, 'So. NH Branch', '378 Maynard Ln.', 'Salem', 'NH', '03079');
+
+/* employee data */
+insert into employee (emp_id, fname, lname, start_date, 
+  dept_id, title, assigned_branch_id)
+values (null, 'MichaelQuery OK, 0 rows affected (0.08 sec)
+
+mysql> 
+mysql> /* end table creation */
+mysql> 
+mysql> /* begin data population */
+mysql> 
+mysql> /* department data */
+mysql> insert into department (dept_id, name)
+    -> values (null, 'Operations');
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into department (dept_id, name)
+    -> values (null, 'Loans');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into department (dept_id, name)
+    -> values (null, 'Administration');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> 
+mysql> /* branch data */
+mysql> insert into branch (branch_id, name, address, city, state, zip)
+    -> values (null, 'Headquarters', '3882 Main St.', 'Waltham', 'MA', '02451'); 
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into branch (branch_id, name, address, city, state, zip)
+    -> values (null, 'Woburn Branch', '422 Maple St.', 'Woburn', 'MA', '01801'); 
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into branch (branch_id, name, address, city, state, zip)
+    -> values (null, 'Quincy Branch', '125 Presidential Way', 'Quincy', 'MA', '02169');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into branch (branch_id, name, address, city, state, zip)
+    -> values (null, 'So. NH Branch', '378 Maynard Ln.', 'Salem', 'NH', '03079');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> 
+mysql> /* employee data */
+mysql> insert into employee (emp_id, fname, lname, start_date, 
+    ->   dept_id, title, assigned_branch_id)
+    -> values (null, 'Michael', 'Smith', '2001-06-22', 
+    ->   (select dept_id from department where name = 'Administration'), 
+    ->   'President', 
+    ->   (select branch_id from branch where name = 'Headquarters'));
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into employee (emp_id, fname, lname, start_date, 
+    ->   dept_id, title, assigned_branch_id)
+    -> values (null, 'Susan', 'Barker', '2002-09-12', 
+    ->   (select dept_id from department where name = 'Administration'), 
+    ->   'Vice President', 
+    ->   (select branch_id from branch where name = 'Headquarters'));
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into employee (emp_id, fname, lname, start_date, 
+    ->   dept_id, title, assigned_branch_id)
+    -> values (null, 'Robert', 'Tyler', '2000-02-09',
+    ->   (select dept_id from department where name = 'Administration'), 
+    ->   'Treasurer', 
+    ->   (select branch_id from branch where name = 'Headquarters'));
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into employee (emp_id, fname, lname, start_date, 
+    ->   dept_id, title, assigned_branch_id)
+    -> values (null, 'Susan', 'Hawthorne', '2002-04-24', 
+    ->   (select dept_id from department where name = 'Operations'), 
+    ->   'Operations Manager', 
+    ->   (select branch_id from branch where name = 'Headquarters'));
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into employee (emp_id, fname, lname, start_date, 
+    ->   dept_id, title, assigned_branch_id)
+    -> values (null, 'John', 'Gooding', '2003-11-14', 
+    ->   (select dept_id from department where name = 'Loans'), 
+    ->   'Loan Manager', 
+    ->   (select branch_id from branch where name = 'Headquarters'));
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into employee (emp_id, fname, lname, start_date, 
+    ->   dept_id, title, assigned_branch_id)
+    -> values (null, 'Helen', 'Fleming', '2004-03-17', 
+    ->   (select dept_id from department where name = 'Operations'), 
+    ->   'Head Teller', 
+    ->   (select branch_id from branch where name = 'Headquarters'));
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into employee (emp_id, fname, lname, start_date, 
+    ->   dept_id, title, assigned_branch_id)
+    -> values (null, 'Chris', 'Tucker', '2004-09-15', 
+    ->   (select dept_id from department where name = 'Operations'), 
+    ->   'Teller', 
+    ->   (select branch_id from branch where name = 'Headquarters'));
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into employee (emp_id, fname, lname, start_date, 
+    ->   dept_id, title, assigned_branch_id)
+    -> values (null, 'Sarah', 'Parker', '2002-12-02', 
+    ->   (select dept_id from department where name = 'Operations'), 
+    ->   'Teller', 
+    ->   (select branch_id from branch where name = 'Headquarters'));
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into employee (emp_id, fname, lname, start_date, 
+    ->   dept_id, title, assigned_branch_id)
+    -> values (null, 'Jane', 'Grossman', '2002-05-03', 
+    ->   (select dept_id from department where name = 'Operations'), 
+    ->   'Teller', 
+    ->   (select branch_id from branch where name = 'Headquarters'));
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into employee (emp_id, fname, lname, start_date, 
+    ->   dept_id, title, assigned_branch_id)
+    -> values (null, 'Paula', 'Roberts', '2002-07-27', 
+    ->   (select dept_id from department where name = 'Operations'), 
+    ->   'Head Teller', 
+    ->   (select branch_id from branch where name = 'Woburn Branch'));
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into employee (emp_id, fname, lname, start_date, 
+    ->   dept_id, title, assigned_branch_id)
+    -> values (null, 'Thomas', 'Ziegler', '2000-10-23', 
+    ->   (select dept_id from department where name = 'Operations'), 
+    ->   'Teller', 
+    ->   (select branch_id from branch where name = 'Woburn Branch'));
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into employee (emp_id, fname, lname, start_date, 
+    ->   dept_id, title, assigned_branch_id)
+    -> values (null, 'Samantha', 'Jameson', '2003-01-08', 
+    ->   (select dept_id from department where name = 'Operations'), 
+    ->   'Teller', 
+    ->   (select branch_id from branch where name = 'Woburn Branch'));
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into employee (emp_id, fname, lname, start_date, 
+    ->   dept_id, title, assigned_branch_id)
+    -> values (null, 'John', 'Blake', '2000-05-11', 
+    ->   (select dept_id from department where name = 'Operations'), 
+    ->   'Head Teller', 
+    ->   (select branch_id from branch where name = 'Quincy Branch'));
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into employee (emp_id, fname, lname, start_date, 
+    ->   dept_id, title, assigned_branch_id)
+    -> values (null, 'Cindy', 'Mason', '2002-08-09', 
+    ->   (select dept_id from department where name = 'Operations'), 
+    ->   'Teller', 
+    ->   (select branch_id from branch where name = 'Quincy Branch'));
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into employee (emp_id, fname, lname, start_date, 
+    ->   dept_id, title, assigned_branch_id)
+    -> values (null, 'Frank', 'Portman', '2003-04-01', 
+    ->   (select dept_id from department where name = 'Operations'), 
+    ->   'Teller', 
+    ->   (select branch_id from branch where name = 'Quincy Branch'));
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into employee (emp_id, fname, lname, start_date, 
+    ->   dept_id, title, assigned_branch_id)
+    -> values (null, 'Theresa', 'Markham', '2001-03-15', 
+    ->   (select dept_id from department where name = 'Operations'), 
+    ->   'Head Teller', 
+    ->   (select branch_id from branch where name = 'So. NH Branch'));
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into employee (emp_id, fname, lname, start_date, 
+    ->   dept_id, title, assigned_branch_id)
+    -> values (null, 'Beth', 'Fowler', '2002-06-29', 
+    ->   (select dept_id from department where name = 'Operations'), 
+    ->   'Teller', 
+    ->   (select branch_id from branch where name = 'So. NH Branch'));
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into employee (emp_id, fname, lname, start_date, 
+    ->   dept_id, title, assigned_branch_id)
+    -> values (null, 'Rick', 'Tulman', '2002-12-12', 
+    ->   (select dept_id from department where name = 'Operations'), 
+    ->   'Teller', 
+    ->   (select branch_id from branch where name = 'So. NH Branch'));
+Query OK, 1 row affected (0.00 sec)
+
+mysql> 
+mysql> /* create data for self-referencing foreign key 'superior_emp_id' */
+mysql> create temporary table emp_tmp as
+    -> select emp_id, fname, lname from employee;
+
+update employee set superior_emp_id =
+ (select emp_id from emp_tmp where lname = 'Smith' and fname = 'Michael')
+where ((lname = 'Barker' and fname = 'Susan')
+  or (lname = 'Tyler' and fname = 'Robert'));
+update employee set superior_emp_id =
+ (select emp_id from emp_tmp where lname = 'Tyler' and fname = 'Robert')
+where lname = 'Hawthorne' and fname = 'Susan';
+update employee set superior_emp_id =
+ (select emp_id from emp_tmp where lname = 'Hawthorne' and fname = 'Susan')
+where ((lname = 'Gooding' and fname = 'John')
+  or (lname = 'Fleming' and fname = 'Helen')
+  or (lname = 'Roberts' and fname = 'Paula') 
+  or (lname = 'Blake' and fname = 'John') 
+  or (lname = 'Markham' and fname = 'Theresa')); 
+update employee set superior_emp_id =
+ (select emp_id from emp_tmp where lname = 'Fleming' and fname = 'Helen')
+where ((lname = 'Tucker' and fname = 'Chris') 
+  or (lname = 'Parker' and fname = 'Sarah') 
+  or (lname = 'Grossman' and fname = 'Jane'));  
+update employee set superior_emp_id =
+ (selQuery OK, 18 rows affected (0.11 sec)
+Records: 18  Duplicates: 0  Warnings: 0
+
+mysql> 
+mysql> update employee set superior_emp_id =
+    ->  (select emp_id from emp_tmp where lname = 'Smith' and fname = 'Michael') 
+    -> where ((lname = 'Barker' and fname = 'Susan')
+    ->   or (lname = 'Tyler' and fname = 'Robert'));
+Query OK, 2 rows affected (0.00 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+mysql> update employee set superior_emp_id =
+    ->  (select emp_id from emp_tmp where lname = 'Tyler' and fname = 'Robert')
+    -> where lname = 'Hawthorne' and fname = 'Susan';
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update employee set superior_emp_id =
+    ->  (select emp_id from emp_tmp where lname = 'Hawthorne' and fname = 'Susan')
+    -> where ((lname = 'Gooding' and fname = 'John')
+    ->   or (lname = 'Fleming' and fname = 'Helen')
+    ->   or (lname = 'Roberts' and fname = 'Paula') 
+    ->   or (lname = 'Blake' and fname = 'John') 
+    ->   or (lname = 'Markham' and fname = 'Theresa')); 
+Query OK, 5 rows affected (0.00 sec)
+Rows matched: 5  Changed: 5  Warnings: 0
+
+mysql> update employee set superior_emp_id =
+    ->  (select emp_id from emp_tmp where lname = 'Fleming' and fname = 'Helen') 
+    -> where ((lname = 'Tucker' and fname = 'Chris') 
+    ->   or (lname = 'Parker' and fname = 'Sarah') 
+    ->   or (lname = 'Grossman' and fname = 'Jane'));  
+Query OK, 3 rows affected (0.00 sec)
+Rows matched: 3  Changed: 3  Warnings: 0
+
+mysql> update employee set superior_emp_id =
+    ->  (select emp_id from emp_tmp where lname = 'Roberts' and fname = 'Paula') 
+    -> where ((lname = 'Ziegler' and fname = 'Thomas')  
+    ->   or (lname = 'Jameson' and fname = 'Samantha'));   
+Query OK, 2 rows affected (0.00 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+mysql> update employee set superior_emp_id =
+    ->  (select emp_id from emp_tmp where lname = 'Blake' and fname = 'John')
+    -> where ((lname = 'Mason' and fname = 'Cindy')   
+    ->   or (lname = 'Portman' and fname = 'Frank'));    
+Query OK, 2 rows affected (0.00 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+mysql> update employee set superior_emp_id =
+    ->  (select emp_id from emp_tmp where lname = 'Markham' and fname = 'Theresa')
+    -> where ((lname = 'Fowler' and fname = 'Beth')   
+    ->   or (lname = 'Tulman' and fname = 'Rick'));    
+Query OK, 2 rows affected (0.00 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+mysql> 
+mysql> drop table emp_tmp;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> 
+mysql> /* product type data */
+mysql> insert into product_type (product_type_cd, name)
+    -> values ('ACCOUNT','Customer Accounts');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into product_type (product_type_cd, name)
+    -> values ('LOAN','Individual and Business Loans');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into product_type (product_type_cd, name)
+    -> values ('INSURANCE','Insurance Offerings');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> 
+mysql> /* product data */
+mysql> insert into product (product_cd, name, product_type_cd, date_offered)
+    -> values ('CHK','checking account','ACCOUNT','2000-01-01');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into product (product_cd, name, product_type_cd, date_offered)
+    -> values ('SAV','savings account','ACCOUNT','2000-01-01');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into product (product_cd, name, product_type_cd, date_offered)
+    -> values ('MM','money market account','ACCOUNT','2000-01-01');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into product (product_cd, name, product_type_cd, date_offered)
+    -> values ('CD','certificate of deposit','ACCOUNT','2000-01-01');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into product (product_cd, name, product_type_cd, date_offered)
+    -> values ('MRT','home mortgage','LOAN','2000-01-01');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into product (product_cd, name, product_type_cd, date_offered)
+    -> values ('AUT','auto loan','LOAN','2000-01-01');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into product (product_cd, name, product_type_cd, date_offered)
+    -> values ('BUS','business line of credit','LOAN','2000-01-01');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into product (product_cd, name, product_type_cd, date_offered)
+    -> values ('SBL','small business loan','LOAN','2000-01-01');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> 
+mysql> /* residential customer data */
+mysql> insert into customer (cust_id, fed_id, cust_type_cd,
+    ->   address, city, state, postal_code)
+    -> values (null, '111-11-1111', 'I', '47 Mockingbird Ln', 'Lynnfield', 'MA', '01940');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into individual (cust_id, fname, lname, birth_date)
+    -> select cust_id, 'James', 'Hadley', '1972-04-22' from customer
+    -> where fed_id = '111-11-1111';
+Query OK, 1 row affected (0.00 sec)
+Records: 1  Duplicates: 0  Warnings: 0
+
+mysql> insert into customer (cust_id, fed_id, cust_type_cd,
+    ->   address, city, state, postal_code)
+    -> values (null, '222-22-2222', 'I', '372 Clearwater Blvd', 'Woburn', 'MA', '01801');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into individual (cust_id, fname, lname, birth_date)
+    -> select cust_id, 'Susan', 'Tingley', '1968-08-15' from customer
+    -> where fed_id = '222-22-2222';
+Query OK, 1 row affected (0.00 sec)
+Records: 1  Duplicates: 0  Warnings: 0
+
+mysql> insert into customer (cust_id, fed_id, cust_type_cd,
+    ->   address, city, state, postal_code)
+    -> values (null, '333-33-3333', 'I', '18 Jessup Rd', 'Quincy', 'MA', '02169');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into individual (cust_id, fname, lname, birth_date)
+    -> select cust_id, 'Frank', 'Tucker', '1958-02-06' from customer
+    -> where fed_id = '333-33-3333';
+Query OK, 1 row affected (0.00 sec)
+Records: 1  Duplicates: 0  Warnings: 0
+
+mysql> insert into customer (cust_id, fed_id, cust_type_cd,
+    ->   address, city, state, postal_code)
+    -> values (null, '444-44-4444', 'I', '12 Buchanan Ln', 'Waltham', 'MA', '02451');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into individual (cust_id, fname, lname, birth_date)
+    -> select cust_id, 'John', 'Hayward', '1966-12-22' from customer
+    -> where fed_id = '444-44-4444';
+Query OK, 1 row affected (0.00 sec)
+Records: 1  Duplicates: 0  Warnings: 0
+
+mysql> insert into customer (cust_id, fed_id, cust_type_cd,
+    ->   address, city, state, postal_code)
+    -> values (null, '555-55-5555', 'I', '2341 Main St', 'Salem', 'NH', '03079');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into individual (cust_id, fname, lname, birth_date)
+    -> select cust_id, 'Charles', 'Frasier', '1971-08-25' from customer
+    -> where fed_id = '555-55-5555';
+Query OK, 1 row affected (0.00 sec)
+Records: 1  Duplicates: 0  Warnings: 0
+
+mysql> insert into customer (cust_id, fed_id, cust_type_cd,
+    ->   address, city, state, postal_code)
+    -> values (null, '666-66-6666', 'I', '12 Blaylock Ln', 'Waltham', 'MA', '02451');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into individual (cust_id, fname, lname, birth_date)
+    -> select cust_id, 'John', 'Spencer', '1962-09-14' from customer
+    -> where fed_id = '666-66-6666';
+Query OK, 1 row affected (0.00 sec)
+Records: 1  Duplicates: 0  Warnings: 0
+
+mysql> insert into customer (cust_id, fed_id, cust_type_cd,
+    ->   address, city, state, postal_code)
+    -> values (null, '777-77-7777', 'I', '29 Admiral Ln', 'Wilmington', 'MA', '01887');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into individual (cust_id, fname, lname, birth_date)
+    -> select cust_id, 'Margaret', 'Young', '1947-03-19' from customer
+    -> where fed_id = '777-77-7777';
+Query OK, 1 row affected (0.00 sec)
+Records: 1  Duplicates: 0  Warnings: 0
+
+mysql> insert into customer (cust_id, fed_id, cust_type_cd,
+    ->   address, city, state, postal_code)
+    -> values (null, '888-88-8888', 'I', '472 Freedom Rd', 'Salem', 'NH', '03079');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into individual (cust_id, fname, lname, birth_date)
+    -> select cust_id, 'Louis', 'Blake', '1977-07-01' from customer
+    -> where fed_id = '888-88-8888';
+Query OK, 1 row affected (0.00 sec)
+Records: 1  Duplicates: 0  Warnings: 0
+
+mysql> insert into customer (cust_id, fed_id, cust_type_cd,
+    ->   address, city, state, postal_code)
+    -> values (null, '999-99-9999', 'I', '29 Maple St', 'Newton', 'MA', '02458');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into individual (cust_id, fname, lname, birth_date)
+    -> select cust_id, 'Richard', 'Farley', '1968-06-16' from customer
+    -> where fed_id = '999-99-9999';
+Query OK, 1 row affected (0.00 sec)
+Records: 1  Duplicates: 0  Warnings: 0
+
+mysql> 
+mysql> /* corporate customer data */
+mysql> insert into customer (cust_id, fed_id, cust_type_cd,
+    ->   address, city, state, postal_code)
+    -> values (null, '04-1111111', 'B', '7 Industrial Way', 'Salem', 'NH', '03079');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into business (cust_id, name, state_id, incorp_date)
+    -> select cust_id, 'Chilton Engineering', '12-345-678', '1995-05-01' from customer
+    -> where fed_id = '04-1111111';
+Query OK, 1 row affected (0.00 sec)
+Records: 1  Duplicates: 0  Warnings: 0
+
+mysql> insert into officer (officer_id, cust_id, fname, lname,
+    ->   title, start_date)
+    -> select null, cust_id, 'John', 'Chilton', 'President', '1995-05-01'
+    -> from customer
+    -> where fed_id = '04-1111111';
+Query OK, 1 row affected (0.00 sec)
+Records: 1  Duplicates: 0  Warnings: 0
+
+mysql> insert into customer (cust_id, fed_id, cust_type_cd,
+    ->   address, city, state, postal_code)
+    -> values (null, '04-2222222', 'B', '287A Corporate Ave', 'Wilmington', 'MA', '01887');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into business (cust_id, name, state_id, incorp_date)
+    -> select cust_id, 'Northeast Cooling Inc.', '23-456-789', '2001-01-01' from customer
+    -> where fed_id = '04-2222222';
+Query OK, 1 row affected (0.00 sec)
+Records: 1  Duplicates: 0  Warnings: 0
+
+mysql> insert into officer (officer_id, cust_id, fname, lname,
+    ->   title, start_date)
+    -> select null, cust_id, 'Paul', 'Hardy', 'President', '2001-01-01'
+    -> from customer
+    -> where fed_id = '04-2222222';
+Query OK, 1 row affected (0.00 sec)
+Records: 1  Duplicates: 0  Warnings: 0
+
+mysql> insert into customer (cust_id, fed_id, cust_type_cd,
+    ->   address, city, state, postal_code)
+    -> values (null, '04-3333333', 'B', '789 Main St', 'Salem', 'NH', '03079');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into business (cust_id, name, state_id, incorp_date)
+    -> select cust_id, 'Superior Auto Body', '34-567-890', '2002-06-30' from customer
+    -> where fed_id = '04-3333333';
+Query OK, 1 row affected (0.00 sec)
+Records: 1  Duplicates: 0  Warnings: 0
+
+mysql> insert into officer (officer_id, cust_id, fname, lname,
+    ->   title, start_date)
+    -> select null, cust_id, 'Carl', 'Lutz', 'President', '2002-06-30'
+    -> from customer
+    -> where fed_id = '04-3333333';
+Query OK, 1 row affected (0.00 sec)
+Records: 1  Duplicates: 0  Warnings: 0
+
+mysql> insert into customer (cust_id, fed_id, cust_type_cd,
+    ->   address, city, state, postal_code)
+    -> values (null, '04-4444444', 'B', '4772 Presidential Way', 'Quincy', 'MA', '02169');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into business (cust_id, name, state_id, incorp_date)
+    -> select cust_id, 'AAA Insurance Inc.', '45-678-901', '1999-05-01' from customer
+    -> where fed_id = '04-4444444';
+Query OK, 1 row affected (0.00 sec)
+Records: 1  Duplicates: 0  Warnings: 0
+
+mysql> insert into officer (officer_id, cust_id, fname, lname,
+    ->   title, start_date)
+    -> select null, cust_id, 'Stanley', 'Cheswick', 'President', '1999-05-01'
+    -> from customer
+    -> where fed_id = '04-4444444';
+Query OK, 1 row affected (0.00 sec)
+Records: 1  Duplicates: 0  Warnings: 0
+
+mysql> 
+mysql> /* residential account data */
+mysql> insert into account (account_id, product_cd, cust_id, open_date,
+    ->   last_activity_date, status, open_branch_id,
+    ->   open_emp_id, avail_balance, pending_balance)
+    -> select null, a.prod_cd, c.cust_id, a.open_date, a.last_date, 'ACTIVE',
+    ->   e.branch_id, e.emp_id, a.avail, a.pend
+    -> from customer c cross join 
+    ->  (select b.branch_id, e.emp_id 
+    ->   from branch b inner join employee e on e.assigned_branch_id = b.branch_id
+    ->   where b.city = 'Woburn' limit 1) e
+    ->   cross join
+    ->  (select 'CHK' prod_cd, '2000-01-15' open_date, '2005-01-04' last_date,
+    ->     1057.75 avail, 1057.75 pend union all
+    ->   select 'SAV' prod_cd, '2000-01-15' open_date, '2004-12-19' last_date,
+    ->     500.00 avail, 500.00 pend union all
+    ->   select 'CD' prod_cd, '2004-06-30' open_date, '2004-06-30' last_date,
+    ->     3000.00 avail, 3000.00 pend) a
+    -> where c.fed_id = '111-11-1111';
+Query OK, 3 rows affected (0.01 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> insert into account (account_id, product_cd, cust_id, open_date,
+    ->   last_activity_date, status, open_branch_id,
+    ->   open_emp_id, avail_balance, pending_balance)
+    -> select null, a.prod_cd, c.cust_id, a.open_date, a.last_date, 'ACTIVE',
+    ->   e.branch_id, e.emp_id, a.avail, a.pend
+    -> from customer c cross join 
+    ->  (select b.branch_id, e.emp_id 
+    ->   from branch b inner join employee e on e.assigned_branch_id = b.branch_id
+    ->   where b.city = 'Woburn' limit 1) e
+    ->   cross join
+    ->  (select 'CHK' prod_cd, '2001-03-12' open_date, '2004-12-27' last_date,
+    ->     2258.02 avail, 2258.02 pend union all
+    ->   select 'SAV' prod_cd, '2001-03-12' open_date, '2004-12-11' last_date,
+    ->     200.00 avail, 200.00 pend) a
+    -> where c.fed_id = '222-22-2222';
+Query OK, 2 rows affected (0.00 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> insert into account (account_id, product_cd, cust_id, open_date,
+    ->   last_activity_date, status, open_branch_id,
+    ->   open_emp_id, avail_balance, pending_balance)
+    -> select null, a.prod_cd, c.cust_id, a.open_date, a.last_date, 'ACTIVE',
+    ->   e.branch_id, e.emp_id, a.avail, a.pend
+    -> from customer c cross join 
+    ->  (select b.branch_id, e.emp_id 
+    ->   from branch b inner join employee e on e.assigned_branch_id = b.branch_id
+    ->   where b.city = 'Quincy' limit 1) e
+    ->   cross join
+    ->  (select 'CHK' prod_cd, '2002-11-23' open_date, '2004-11-30' last_date,
+    ->     1057.75 avail, 1057.75 pend union all
+    ->   select 'MM' prod_cd, '2002-12-15' open_date, '2004-12-05' last_date,
+    ->     2212.50 avail, 2212.50 pend) a
+    -> where c.fed_id = '333-33-3333';
+Query OK, 2 rows affected (0.00 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> insert into account (account_id, product_cd, cust_id, open_date,
+    ->   last_activity_date, status, open_branch_id,
+    ->   open_emp_id, avail_balance, pending_balance)
+    -> select null, a.prod_cd, c.cust_id, a.open_date, a.last_date, 'ACTIVE',
+    ->   e.branch_id, e.emp_id, a.avail, a.pend
+    -> from customer c cross join 
+    ->  (select b.branch_id, e.emp_id 
+    ->   from branch b inner join employee e on e.assigned_branch_id = b.branch_id
+    ->   where b.city = 'Waltham' limit 1) e
+    ->   cross join
+    ->  (select 'CHK' prod_cd, '2003-09-12' open_date, '2005-01-03' last_date,
+    ->     534.12 avail, 534.12 pend union all
+    ->   select 'SAV' prod_cd, '2000-01-15' open_date, '2004-10-24' last_date,
+    ->     767.77 avail, 767.77 pend union all
+    ->   select 'MM' prod_cd, '2004-09-30' open_date, '2004-11-11' last_date,
+    ->     5487.09 avail, 5487.09 pend) a
+    -> where c.fed_id = '444-44-4444';
+Query OK, 3 rows affected (0.00 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> insert into account (account_id, product_cd, cust_id, open_date,
+    ->   last_activity_date, status, open_branch_id,
+    ->   open_emp_id, avail_balance, pending_balance)
+    -> select null, a.prod_cd, c.cust_id, a.open_date, a.last_date, 'ACTIVE',
+    ->   e.branch_id, e.emp_id, a.avail, a.pend
+    -> from customer c cross join 
+    ->  (select b.branch_id, e.emp_id 
+    ->   from branch b inner join employee e on e.assigned_branch_id = b.branch_id
+    ->   where b.city = 'Salem' limit 1) e
+    ->   cross join
+    ->  (select 'CHK' prod_cd, '2004-01-27' open_date, '2005-01-05' last_date,
+    ->     2237.97 avail, 2897.97 pend) a
+    -> where c.fed_id = '555-55-5555';
+Query OK, 1 row affected (0.00 sec)
+Records: 1  Duplicates: 0  Warnings: 0
+
+mysql> insert into account (account_id, product_cd, cust_id, open_date,
+    ->   last_activity_date, status, open_branch_id,
+    ->   open_emp_id, avail_balance, pending_balance)
+    -> select null, a.prod_cd, c.cust_id, a.open_date, a.last_date, 'ACTIVE',
+    ->   e.branch_id, e.emp_id, a.avail, a.pend
+    -> from customer c cross join 
+    ->  (select b.branch_id, e.emp_id 
+    ->   from branch b inner join employee e on e.assigned_branch_id = b.branch_id
+    ->   where b.city = 'Waltham' limit 1) e
+    ->   cross join
+    ->  (select 'CHK' prod_cd, '2002-08-24' open_date, '2004-11-29' last_date,
+    ->     122.37 avail, 122.37 pend union all
+    ->   select 'CD' prod_cd, '2004-12-28' open_date, '2004-12-28' last_date,
+    ->     10000.00 avail, 10000.00 pend) a
+    -> where c.fed_id = '666-66-6666';
+Query OK, 2 rows affected (0.00 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> insert into account (account_id, product_cd, cust_id, open_date,
+    ->   last_activity_date, status, open_branch_id,
+    ->   open_emp_id, avail_balance, pending_balance)
+    -> select null, a.prod_cd, c.cust_id, a.open_date, a.last_date, 'ACTIVE',
+    ->   e.branch_id, e.emp_id, a.avail, a.pend
+    -> from customer c cross join 
+    ->  (select b.branch_id, e.emp_id 
+    ->   from branch b inner join employee e on e.assigned_branch_id = b.branch_id
+    ->   where b.city = 'Woburn' limit 1) e
+    ->   cross join
+    ->  (select 'CD' prod_cd, '2004-01-12' open_date, '2004-01-12' last_date,
+    ->     5000.00 avail, 5000.00 pend) a
+    -> where c.fed_id = '777-77-7777';
+Query OK, 1 row affected (0.01 sec)
+Records: 1  Duplicates: 0  Warnings: 0
+
+mysql> insert into account (account_id, product_cd, cust_id, open_date,
+    ->   last_activity_date, status, open_branch_id,
+    ->   open_emp_id, avail_balance, pending_balance)
+    -> select null, a.prod_cd, c.cust_id, a.open_date, a.last_date, 'ACTIVE',
+    ->   e.branch_id, e.emp_id, a.avail, a.pend
+    -> from customer c cross join 
+    ->  (select b.branch_id, e.emp_id 
+    ->   from branch b inner join employee e on e.assigned_branch_id = b.branch_id
+    ->   where b.city = 'Salem' limit 1) e
+    ->   cross join
+    ->  (select 'CHK' prod_cd, '2001-05-23' open_date, '2005-01-03' last_date,
+    ->     3487.19 avail, 3487.19 pend union all
+    ->   select 'SAV' prod_cd, '2001-05-23' open_date, '2004-10-12' last_date,
+    ->     387.99 avail, 387.99 pend) a
+    -> where c.fed_id = '888-88-8888';
+Query OK, 2 rows affected (0.00 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> insert into account (account_id, product_cd, cust_id, open_date,
+    ->   last_activity_date, status, open_branch_id,
+    ->   open_emp_id, avail_balance, pending_balance)
+    -> select null, a.prod_cd, c.cust_id, a.open_date, a.last_date, 'ACTIVE',
+    ->   e.branch_id, e.emp_id, a.avail, a.pend
+    -> from customer c cross join 
+    ->  (select b.branch_id, e.emp_id 
+    ->   from branch b inner join employee e on e.assigned_branch_id = b.branch_id
+    ->   where b.city = 'Waltham' limit 1) e
+    ->   cross join
+    ->  (select 'CHK' prod_cd, '2003-07-30' open_date, '2004-12-15' last_date,
+    ->     125.67 avail, 125.67 pend union all
+    ->   select 'MM' prod_cd, '2004-10-28' open_date, '2004-10-28' last_date,
+    ->     9345.55 avail, 9845.55 pend union all
+    ->   select 'CD' prod_cd, '2004-06-30' open_date, '2004-06-30' last_date,
+    ->     1500.00 avail, 1500.00 pend) a
+    -> where c.fed_id = '999-99-9999';
+Query OK, 3 rows affected (0.00 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> 
+mysql> /* corporate account data */
+mysql> insert into account (account_id, product_cd, cust_id, open_date,
+    ->   last_activity_date, status, open_branch_id,
+    ->   open_emp_id, avail_balance, pending_balance)
+    -> select null, a.prod_cd, c.cust_id, a.open_date, a.last_date, 'ACTIVE',
+    ->   e.branch_id, e.emp_id, a.avail, a.pend
+    -> from customer c cross join 
+    ->  (select b.branch_id, e.emp_id 
+    ->   from branch b inner join employee e on e.assigned_branch_id = b.branch_id
+    ->   where b.city = 'Salem' limit 1) e
+    ->   cross join
+    ->  (select 'CHK' prod_cd, '2002-09-30' open_date, '2004-12-15' last_date,
+    ->     23575.12 avail, 23575.12 pend union all
+    ->   select 'BUS' prod_cd, '2002-10-01' open_date, '2004-08-28' last_date,
+    ->     0 avail, 0 pend) a
+    -> where c.fed_id = '04-1111111';
+Query OK, 2 rows affected (0.00 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> insert into account (account_id, product_cd, cust_id, open_date,
+    ->   last_activity_date, status, open_branch_id,
+    ->   open_emp_id, avail_balance, pending_balance)
+    -> select null, a.prod_cd, c.cust_id, a.open_date, a.last_date, 'ACTIVE',
+    ->   e.branch_id, e.emp_id, a.avail, a.pend
+    -> from customer c cross join 
+    ->  (select b.branch_id, e.emp_id 
+    ->   from branch b inner join employee e on e.assigned_branch_id = b.branch_id
+    ->   where b.city = 'Woburn' limit 1) e
+    ->   cross join
+    ->  (select 'BUS' prod_cd, '2004-03-22' open_date, '2004-11-14' last_date,
+    ->     9345.55 avail, 9345.55 pend) a
+    -> where c.fed_id = '04-2222222';
+Query OK, 1 row affected (0.00 sec)
+Records: 1  Duplicates: 0  Warnings: 0
+
+mysql> insert into account (account_id, product_cd, cust_id, open_date,
+    ->   last_activity_date, status, open_branch_id,
+    ->   open_emp_id, avail_balance, pending_balance)
+    -> select null, a.prod_cd, c.cust_id, a.open_date, a.last_date, 'ACTIVE',
+    ->   e.branch_id, e.emp_id, a.avail, a.pend
+    -> from customer c cross join 
+    ->  (select b.branch_id, e.emp_id 
+    ->   from branch b inner join employee e on e.assigned_branch_id = b.branch_id
+    ->   where b.city = 'Salem' limit 1) e
+    ->   cross join
+    ->  (select 'CHK' prod_cd, '2003-07-30' open_date, '2004-12-15' last_date,
+    ->     38552.05 avail, 38552.05 pend) a
+    -> where c.fed_id = '04-3333333';
+Query OK, 1 row affected (0.00 sec)
+Records: 1  Duplicates: 0  Warnings: 0
+
+mysql> insert into account (account_id, product_cd, cust_id, open_date,
+    ->   last_activity_date, status, open_branch_id,
+    ->   open_emp_id, avail_balance, pending_balance)
+    -> select null, a.prod_cd, c.cust_id, a.open_date, a.last_date, 'ACTIVE',
+    ->   e.branch_id, e.emp_id, a.avail, a.pend
+    -> from customer c cross join 
+    ->  (select b.branch_id, e.emp_id 
+    ->   from branch b inner join employee e on e.assigned_branch_id = b.branch_id
+    ->   where b.city = 'Quincy' limit 1) e
+    ->   cross join
+    ->  (select 'SBL' prod_cd, '2004-02-22' open_date, '2004-12-17' last_date,
+    ->     50000.00 avail, 50000.00 pend) a
+    -> where c.fed_id = '04-4444444';
+Query OK, 1 row affected (0.00 sec)
+Records: 1  Duplicates: 0  Warnings: 0
+
+mysql> 
+mysql> /* put $100 in all checking/savings accounts on date account opened */
+mysql> insert into transaction (txn_id, txn_date, account_id, txn_type_cd,
+    ->   amount, funds_avail_date)
+    -> select null, a.open_date, a.account_id, 'CDT', 100, a.open_date
+    -> from account a
+    -> where a.product_cd IN ('CHK','SAV','CD','MM');
+Query OK, 21 rows affected (0.02 sec)
+Records: 21  Duplicates: 0  Warnings: 0
+
+mysql> 
+mysql> /* end data population */
+mysql> use bank;
+Database changed
+mysql> show tables;
++----------------+
+| Tables_in_bank |
++----------------+
+| account        |
+| branch         |
+| business       |
+| customer       |
+| department     |
+| employee       |
+| individual     |
+| officer        |
+| product        |
+| product_type   |
+| transaction    |
++----------------+
+11 rows in set (0.00 sec)
+
+mysql> select * from account
+    -> \c
+mysql> select * from account;
++------------+------------+---------+------------+------------+--------------------+--------+----------------+-------------+---------------+-----------------+
+| account_id | product_cd | cust_id | open_date  | close_date | last_activity_date | status | open_branch_id | open_emp_id | avail_balance | pending_balance |
++------------+------------+---------+------------+------------+--------------------+--------+----------------+-------------+---------------+-----------------+
+|          1 | CHK        |       1 | 2000-01-15 | NULL       | 2005-01-04         | ACTIVE |              2 |          10 |       1057.75 |         1057.75 |
+|          2 | SAV        |       1 | 2000-01-15 | NULL       | 2004-12-19         | ACTIVE |              2 |          10 |        500.00 |          500.00 |
+|          3 | CD         |       1 | 2004-06-30 | NULL       | 2004-06-30         | ACTIVE |              2 |          10 |       3000.00 |         3000.00 |
+|          4 | CHK        |       2 | 2001-03-12 | NULL       | 2004-12-27         | ACTIVE |              2 |          10 |       2258.02 |         2258.02 |
+|          5 | SAV        |       2 | 2001-03-12 | NULL       | 2004-12-11         | ACTIVE |              2 |          10 |        200.00 |          200.00 |
+|          6 | CHK        |       3 | 2002-11-23 | NULL       | 2004-11-30         | ACTIVE |              3 |          13 |       1057.75 |         1057.75 |
+|          7 | MM         |       3 | 2002-12-15 | NULL       | 2004-12-05         | ACTIVE |              3 |          13 |       2212.50 |         2212.50 |
+|          8 | CHK        |       4 | 2003-09-12 | NULL       | 2005-01-03         | ACTIVE |              1 |           1 |        534.12 |          534.12 |
+|          9 | SAV        |       4 | 2000-01-15 | NULL       | 2004-10-24         | ACTIVE |              1 |           1 |        767.77 |          767.77 |
+|         10 | MM         |       4 | 2004-09-30 | NULL       | 2004-11-11         | ACTIVE |              1 |           1 |       5487.09 |         5487.09 |
+|         11 | CHK        |       5 | 2004-01-27 | NULL       | 2005-01-05         | ACTIVE |              4 |          16 |       2237.97 |         2897.97 |
+|         12 | CHK        |       6 | 2002-08-24 | NULL       | 2004-11-29         | ACTIVE |              1 |           1 |        122.37 |          122.37 |
+|         13 | CD         |       6 | 2004-12-28 | NULL       | 2004-12-28         | ACTIVE |              1 |           1 |      10000.00 |        10000.00 |
+|         14 | CD         |       7 | 2004-01-12 | NULL       | 2004-01-12         | ACTIVE |              2 |          10 |       5000.00 |         5000.00 |
+|         15 | CHK        |       8 | 2001-05-23 | NULL       | 2005-01-03         | ACTIVE |              4 |          16 |       3487.19 |         3487.19 |
+|         16 | SAV        |       8 | 2001-05-23 | NULL       | 2004-10-12         | ACTIVE |              4 |          16 |        387.99 |          387.99 |
+|         17 | CHK        |       9 | 2003-07-30 | NULL       | 2004-12-15         | ACTIVE |              1 |           1 |        125.67 |          125.67 |
+|         18 | MM         |       9 | 2004-10-28 | NULL       | 2004-10-28         | ACTIVE |              1 |           1 |       9345.55 |         9845.55 |
+|         19 | CD         |       9 | 2004-06-30 | NULL       | 2004-06-30         | ACTIVE |              1 |           1 |       1500.00 |         1500.00 |
+|         20 | CHK        |      10 | 2002-09-30 | NULL       | 2004-12-15         | ACTIVE |              4 |          16 |      23575.12 |        23575.12 |
+|         21 | BUS        |      10 | 2002-10-01 | NULL       | 2004-08-28         | ACTIVE |              4 |          16 |          0.00 |            0.00 |
+|         22 | BUS        |      11 | 2004-03-22 | NULL       | 2004-11-14         | ACTIVE |              2 |          10 |       9345.55 |         9345.55 |
+|         23 | CHK        |      12 | 2003-07-30 | NULL       | 2004-12-15         | ACTIVE |              4 |          16 |      38552.05 |        38552.05 |
+|         24 | SBL        |      13 | 2004-02-22 | NULL       | 2004-12-17         | ACTIVE |              3 |          13 |      50000.00 |        50000.00 |
++------------+------------+---------+------------+------------+--------------------+--------+----------------+-------------+---------------+-----------------+
+24 rows in set (0.00 sec)
+
+mysql> grant all privileges on bank.* to 'jmcavoy22'@'localhost' identified by 'xyz';
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> quit
+Bye
+Justin-Mcavoys-MacBook:~ wahookeeper$ mysql -u jmcavoy22 -p
+Enter password: 
+ERROR 1045 (28000): Access denied for user 'jmcavoy22'@'localhost' (using password: YES)
+Justin-Mcavoys-MacBook:~ wahookeeper$ mysql -u jmcavoy
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 31
+Server version: 5.1.44 Source distribution
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use bank
+ERROR 1044 (42000): Access denied for user ''@'localhost' to database 'bank'
+mysql> show databases
+    -> \c
+mysql> quit
+Bye
+Justin-Mcavoys-MacBook:~ wahookeeper$ mysql -u root
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 32
+Server version: 5.1.44 Source distribution
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| Chuck_Norris       |
+| Justins_Movies     |
+| bank               |
+| cdcol              |
+| mysql              |
+| test               |
++--------------------+
+7 rows in set (0.00 sec)
+
+mysql> use bank
+Database changed
+mysql> select now ();
+ERROR 1630 (42000): FUNCTION bank.now does not exist. Check the 'Function Name Parsing and Resolution' section in the Reference Manual
+mysql> show tables;
++----------------+
+| Tables_in_bank |
++----------------+
+| account        |
+| branch         |
+| business       |
+| customer       |
+| department     |
+| employee       |
+| individual     |
+| officer        |
+| product        |
+| product_type   |
+| transaction    |
++----------------+
+11 rows in set (0.00 sec)
+
+mysql> select * from employee;
++--------+----------+-----------+------------+----------+-----------------+---------+--------------------+--------------------+
+| emp_id | fname    | lname     | start_date | end_date | superior_emp_id | dept_id | title              | assigned_branch_id |
++--------+----------+-----------+------------+----------+-----------------+---------+--------------------+--------------------+
+|      1 | Michael  | Smith     | 2001-06-22 | NULL     |            NULL |       3 | President          |                  1 |
+|      2 | Susan    | Barker    | 2002-09-12 | NULL     |               1 |       3 | Vice President     |                  1 |
+|      3 | Robert   | Tyler     | 2000-02-09 | NULL     |               1 |       3 | Treasurer          |                  1 |
+|      4 | Susan    | Hawthorne | 2002-04-24 | NULL     |               3 |       1 | Operations Manager |                  1 |
+|      5 | John     | Gooding   | 2003-11-14 | NULL     |               4 |       2 | Loan Manager       |                  1 |
+|      6 | Helen    | Fleming   | 2004-03-17 | NULL     |               4 |       1 | Head Teller        |                  1 |
+|      7 | Chris    | Tucker    | 2004-09-15 | NULL     |               6 |       1 | Teller             |                  1 |
+|      8 | Sarah    | Parker    | 2002-12-02 | NULL     |               6 |       1 | Teller             |                  1 |
+|      9 | Jane     | Grossman  | 2002-05-03 | NULL     |               6 |       1 | Teller             |                  1 |
+|     10 | Paula    | Roberts   | 2002-07-27 | NULL     |               4 |       1 | Head Teller        |                  2 |
+|     11 | Thomas   | Ziegler   | 2000-10-23 | NULL     |              10 |       1 | Teller             |                  2 |
+|     12 | Samantha | Jameson   | 2003-01-08 | NULL     |              10 |       1 | Teller             |                  2 |
+|     13 | John     | Blake     | 2000-05-11 | NULL     |               4 |       1 | Head Teller        |                  3 |
+|     14 | Cindy    | Mason     | 2002-08-09 | NULL     |              13 |       1 | Teller             |                  3 |
+|     15 | Frank    | Portman   | 2003-04-01 | NULL     |              13 |       1 | Teller             |                  3 |
+|     16 | Theresa  | Markham   | 2001-03-15 | NULL     |               4 |       1 | Head Teller        |                  4 |
+|     17 | Beth     | Fowler    | 2002-06-29 | NULL     |              16 |       1 | Teller             |                  4 |
+|     18 | Rick     | Tulman    | 2002-12-12 | NULL     |              16 |       1 | Teller             |                  4 |
++--------+----------+-----------+------------+----------+-----------------+---------+--------------------+--------------------+
+18 rows in set (0.01 sec)
+
+mysql> select * from employee where fname = 'mary';
+Empty set (0.00 sec)
+
+mysql> select * from employee where fname = 'frank';
++--------+-------+---------+------------+----------+-----------------+---------+--------+--------------------+
+| emp_id | fname | lname   | start_date | end_date | superior_emp_id | dept_id | title  | assigned_branch_id |
++--------+-------+---------+------------+----------+-----------------+---------+--------+--------------------+
+|     15 | Frank | Portman | 2003-04-01 | NULL     |              13 |       1 | Teller |                  3 |
++--------+-------+---------+------------+----------+-----------------+---------+--------+--------------------+
+1 row in set (0.00 sec)
+
+mysql> show tables;
++----------------+
+| Tables_in_bank |
++----------------+
+| account        |
+| branch         |
+| business       |
+| customer       |
+| department     |
+| employee       |
+| individual     |
+| officer        |
+| product        |
+| product_type   |
+| transaction    |
++----------------+
+11 rows in set (0.00 sec)
+
+mysql> show charater set;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'charater set' at line 1
+mysql> exit bank
+    -> \c
+mysql> select now();
++---------------------+
+| now()               |
++---------------------+
+| 2012-11-07 15:28:04 |
++---------------------+
+1 row in set (0.04 sec)
+
+mysql> show character set;
++----------+-----------------------------+---------------------+--------+
+| Charset  | Description                 | Default collation   | Maxlen |
++----------+-----------------------------+---------------------+--------+
+| big5     | Big5 Traditional Chinese    | big5_chinese_ci     |      2 |
+| dec8     | DEC West European           | dec8_swedish_ci     |      1 |
+| cp850    | DOS West European           | cp850_general_ci    |      1 |
+| hp8      | HP West European            | hp8_english_ci      |      1 |
+| koi8r    | KOI8-R Relcom Russian       | koi8r_general_ci    |      1 |
+| latin1   | cp1252 West European        | latin1_swedish_ci   |      1 |
+| latin2   | ISO 8859-2 Central European | latin2_general_ci   |      1 |
+| swe7     | 7bit Swedish                | swe7_swedish_ci     |      1 |
+| ascii    | US ASCII                    | ascii_general_ci    |      1 |
+| ujis     | EUC-JP Japanese             | ujis_japanese_ci    |      3 |
+| sjis     | Shift-JIS Japanese          | sjis_japanese_ci    |      2 |
+| hebrew   | ISO 8859-8 Hebrew           | hebrew_general_ci   |      1 |
+| tis620   | TIS620 Thai                 | tis620_thai_ci      |      1 |
+| euckr    | EUC-KR Korean               | euckr_korean_ci     |      2 |
+| koi8u    | KOI8-U Ukrainian            | koi8u_general_ci    |      1 |
+| gb2312   | GB2312 Simplified Chinese   | gb2312_chinese_ci   |      2 |
+| greek    | ISO 8859-7 Greek            | greek_general_ci    |      1 |
+| cp1250   | Windows Central European    | cp1250_general_ci   |      1 |
+| gbk      | GBK Simplified Chinese      | gbk_chinese_ci      |      2 |
+| latin5   | ISO 8859-9 Turkish          | latin5_turkish_ci   |      1 |
+| armscii8 | ARMSCII-8 Armenian          | armscii8_general_ci |      1 |
+| utf8     | UTF-8 Unicode               | utf8_general_ci     |      3 |
+| ucs2     | UCS-2 Unicode               | ucs2_general_ci     |      2 |
+| cp866    | DOS Russian                 | cp866_general_ci    |      1 |
+| keybcs2  | DOS Kamenicky Czech-Slovak  | keybcs2_general_ci  |      1 |
+| macce    | Mac Central European        | macce_general_ci    |      1 |
+| macroman | Mac West European           | macroman_general_ci |      1 |
+| cp852    | DOS Central European        | cp852_general_ci    |      1 |
+| latin7   | ISO 8859-13 Baltic          | latin7_general_ci   |      1 |
+| cp1251   | Windows Cyrillic            | cp1251_general_ci   |      1 |
+| cp1256   | Windows Arabic              | cp1256_general_ci   |      1 |
+| cp1257   | Windows Baltic              | cp1257_general_ci   |      1 |
+| binary   | Binary pseudo charset       | binary              |      1 |
+| geostd8  | GEOSTD8 Georgian            | geostd8_general_ci  |      1 |
+| cp932    | SJIS for Windows Japanese   | cp932_japanese_ci   |      2 |
+| eucjpms  | UJIS for Windows Japanese   | eucjpms_japanese_ci |      3 |
++----------+-----------------------------+---------------------+--------+
+36 rows in set (0.00 sec)
+
+mysql> select now();
++---------------------+
+| now()               |
++---------------------+
+| 2012-11-07 15:51:58 |
++---------------------+
+1 row in set (0.00 sec)
+
+mysql> exit
+Bye
+Justin-Mcavoys-MacBook:~ wahookeeper$ ls
+Desktop					Music
+Documents				Pictures
+Downloads				Public
+Forefront UAG Remote Access Agent	Sites
+Library					testdisk.log
+Movies
+Justin-Mcavoys-MacBook:~ wahookeeper$ cd /Applications/XAMPP/
+Justin-Mcavoys-MacBook:XAMPP wahookeeper$ ls -l
+total 7616
+drwxr-xr-x@  3 wahookeeper  admin      102 Feb 27  2010 XAMPP Control.app
+lrwxr-xr-x   1 wahookeeper  admin       18 Feb 27  2010 cgi-bin -> xamppfiles/cgi-bin
+lrwxr-xr-x   1 wahookeeper  admin       14 Feb 27  2010 etc -> xamppfiles/etc
+lrwxr-xr-x   1 wahookeeper  admin       17 Feb 27  2010 htdocs -> xamppfiles/htdocs
+-rwxr-xr-x@  1 wahookeeper  admin  1940972 Nov  7 14:38 htdocs alias
+lrwxr-xr-x   1 wahookeeper  admin       15 Feb 27  2010 logs -> xamppfiles/logs
+drwxr-xr-x@ 23 root         admin      782 Feb 27  2010 xamppfiles
+Justin-Mcavoys-MacBook:XAMPP wahookeeper$ whoami
+wahookeeper
+Justin-Mcavoys-MacBook:XAMPP wahookeeper$ cd /Applications/XAMPP/
+Justin-Mcavoys-MacBook:XAMPP wahookeeper$ ls
+XAMPP Control.app	htdocs			xamppfiles
+cgi-bin			htdocs alias
+etc			logs
+Justin-Mcavoys-MacBook:XAMPP wahookeeper$ chmod -R 777 htdocs
+Justin-Mcavoys-MacBook:XAMPP wahookeeper$ ls -l
+total 7616
+drwxr-xr-x@  3 wahookeeper  admin      102 Feb 27  2010 XAMPP Control.app
+lrwxr-xr-x   1 wahookeeper  admin       18 Feb 27  2010 cgi-bin -> xamppfiles/cgi-bin
+lrwxr-xr-x   1 wahookeeper  admin       14 Feb 27  2010 etc -> xamppfiles/etc
+lrwxr-xr-x   1 wahookeeper  admin       17 Feb 27  2010 htdocs -> xamppfiles/htdocs
+-rwxr-xr-x@  1 wahookeeper  admin  1940972 Nov  7 14:38 htdocs alias
+lrwxr-xr-x   1 wahookeeper  admin       15 Feb 27  2010 logs -> xamppfiles/logs
+drwxr-xr-x@ 23 root         admin      782 Feb 27  2010 xamppfiles
+Justin-Mcavoys-MacBook:XAMPP wahookeeper$ cd xamppfiles/
+Justin-Mcavoys-MacBook:xamppfiles wahookeeper$ ls
+bin		etc		libexec		phpmyadmin	temp
+cgi-bin		htdocs		licences	sbin		var
+doc		icons		logs		share		xampp
+error		lib		modules		sql-bench	xampp.pot
+Justin-Mcavoys-MacBook:xamppfiles wahookeeper$ chmod -R 777 htdocs
+chmod: Unable to change file mode on htdocs: Operation not permitted
+chmod: Unable to change file mode on htdocs/.DS_Store: Operation not permitted
+chmod: Unable to change file mode on htdocs/favicon.ico: Operation not permitted
+chmod: Unable to change file mode on htdocs/index.php: Operation not permitted
+chmod: Unable to change file mode on htdocs/webalizer: Operation not permitted
+chmod: Unable to change file mode on htdocs/webalizer/ctry_usage_201210.png: Operation not permitted
+chmod: Unable to change file mode on htdocs/webalizer/daily_usage_201210.png: Operation not permitted
+chmod: Unable to change file mode on htdocs/webalizer/hourly_usage_201210.png: Operation not permitted
+chmod: Unable to change file mode on htdocs/webalizer/index.html: Operation not permitted
+chmod: Unable to change file mode on htdocs/webalizer/usage.png: Operation not permitted
+chmod: Unable to change file mode on htdocs/webalizer/usage_201210.html: Operation not permitted
+chmod: Unable to change file mode on htdocs/webalizer/webalizer.hist: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/.DS_Store: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/AnkeCalligraph.fdb: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/AnkeCalligraph.TTF: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/biorhythm.php: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/cds-fpdf.php: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/cds.php: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/cgi.cgi: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/charset.php: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/components.php: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/contrib: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/contrib/BabelSans-B.fdb: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/contrib/cds.xml: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/contrib/dom.php: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/contrib/interbase.php: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/contrib/interbase.pl: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/contrib/mingstats.html: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/contrib/mingstats_swf.php: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/contrib/mysql.php: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/contrib/mysql.pl: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/contrib/oracle.php: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/contrib/oracle.pl: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/contrib/postgresql.php: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/contrib/postgresql.pl: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/contrib/sax.php: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/contrib/soap.php: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/contrib/sql2xml.php: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/contrib/sqlite.php: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/contrib/sqlite.pl: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/contrib/testperldbi.pl: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/contrib/xmlrss.php: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/guestbook-de.pl: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/guestbook-en.pl: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/guestbook-es.pl: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/guestbook-fr.pl: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/guestbook-it.pl: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/guestbook-nl.pl: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/guestbook-no.pl: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/guestbook-pl.pl: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/guestbook-pt_br.pl: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/guestbook-zh.pl: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/guestbook.dat: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/head.php: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/iart.php: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/img: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/img/.DS_Store: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/img/apachefriends.gif: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/img/blank.gif: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/img/head-for.gif: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/img/head-fuer.gif: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/img/head-linux.gif: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/img/head-macosx.gif: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/img/head-solaris.gif: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/img/head-windows.gif: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/img/head-xampp.gif: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/img/lb.gif: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/img/logo-big.gif: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/img/logo-small.gif: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/img/logo-small.jpg: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/img/lt.gif: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/img/new.png: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/img/rb.gif: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/img/rt.gif: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/img/signature-kay.gif: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/img/signature-oswald.gif: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/img/status1.gif: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/img/status2.gif: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/img/status3.gif: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/img/status4.gif: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/img/status5.gif: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/img/strichel.gif: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/img/xampp-logo-new.gif: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/img/xampp-logo.jpg: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/index.php: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/lang: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/lang/de.php: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/lang/en.php: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/lang/es.php: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/lang/fr.php: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/lang/it.php: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/lang/jp.php: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/lang/languages.php: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/lang/nl.php: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/lang/no.php: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/lang/pl.php: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/lang/pt_br.php: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/lang/zh.php: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/lang.php: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/lang.tmp: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/langsettings.php: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/manuals.php: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/ming.php: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/mingswf.php: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/mysql.php: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/navi.php: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/perl.pl: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/phonebook.php: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/php.php: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/phpinfo.php: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/security.php: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/showcode.php: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/softwarelist.inc: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/splash-logo.php: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/splash-swf.php: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/splash.php: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/sqlite: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/sqlite/.htaccess: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/sqlite/cdcol: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/sqlite/phonebook.sqlite: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/ssi.inc: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/ssi.shtml: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/start.php: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/status.php: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/test.php: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/webalizer.php: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/xampp.css: Operation not permitted
+chmod: Unable to change file mode on htdocs/xampp/xampp.js: Operation not permitted
+Justin-Mcavoys-MacBook:xamppfiles wahookeeper$ sudo chmod -R 777 htdocs
+Password:
+Justin-Mcavoys-MacBook:xamppfiles wahookeeper$ cd htdocs/
+Justin-Mcavoys-MacBook:htdocs wahookeeper$ ls
+favicon.ico	index.php	movies		webalizer	xampp
+Justin-Mcavoys-MacBook:htdocs wahookeeper$ cd movies/
+Justin-Mcavoys-MacBook:movies wahookeeper$ ls
+Justin-Mcavoys-MacBook:movies wahookeeper$ ls
+Justin-Mcavoys-MacBook:movies wahookeeper$ ls
+Justin-Mcavoys-MacBook:movies wahookeeper$ cd ..
+Justin-Mcavoys-MacBook:htdocs wahookeeper$ ls
+favicon.ico	index.php	movies		webalizer	xampp
+Justin-Mcavoys-MacBook:htdocs wahookeeper$ mv index.php movies/
+Justin-Mcavoys-MacBook:htdocs wahookeeper$ ls
+favicon.ico	movies		webalizer	xampp
+Justin-Mcavoys-MacBook:htdocs wahookeeper$ cd movies/
+Justin-Mcavoys-MacBook:movies wahookeeper$ ls
+index.php
+Justin-Mcavoys-MacBook:movies wahookeeper$ vi index.php 
+Justin-Mcavoys-MacBook:movies wahookeeper$ mv index.php ../
+Justin-Mcavoys-MacBook:movies wahookeeper$ ls
+Justin-Mcavoys-MacBook:movies wahookeeper$ mv ~/Desktop/
+.DS_Store                         Logitech Harmony Remote Software
+.localized                        P90X/
+Diablo III                        XAMPP Control
+Justin-Mcavoys-MacBook:movies wahookeeper$ vi index.php
+Justin-Mcavoys-MacBook:movies wahookeeper$ ls
+index.php
+Justin-Mcavoys-MacBook:movies wahookeeper$ cd ..
+Justin-Mcavoys-MacBook:htdocs wahookeeper$ ls
+favicon.ico	index.php	movies		webalizer	xampp
+Justin-Mcavoys-MacBook:htdocs wahookeeper$ ls -l
+total 72
+-rwxrwxrwx@  1 nobody       admin  30894 Feb 27  2010 favicon.ico
+-rwxrwxrwx@  1 nobody       admin    257 Feb 27  2010 index.php
+drwxr-xr-x   3 wahookeeper  admin    102 Nov  7 17:14 movies
+drwxrwxrwx@  9 nobody       admin    306 Oct 24 14:46 webalizer
+drwxrwxrwx@ 56 nobody       admin   1904 Feb 27  2010 xampp
+Justin-Mcavoys-MacBook:htdocs wahookeeper$ chmod -R 777 movies/
+Justin-Mcavoys-MacBook:htdocs wahookeeper$ vi index.php 
+Justin-Mcavoys-MacBook:htdocs wahookeeper$ cd movies/
+Justin-Mcavoys-MacBook:movies wahookeeper$ vi index.php 
+Justin-Mcavoys-MacBook:movies wahookeeper$ vi index.php 
+Justin-Mcavoys-MacBook:movies wahookeeper$ vi index.php 
+Justin-Mcavoys-MacBook:movies wahookeeper$ vi index.php 
+Justin-Mcavoys-MacBook:movies wahookeeper$ vi search.html
+
+<html>
+<head>
+<title>blah</title>
+<body>
+<h1>blah</h1>
+
+<form action="results.php" method="post">
+Choose search type:<br>
+<select name="searchtype">
+<option value="title">Title
+<option value="year_released">Year Released
+<option value="director">Director
+<option value="genre">Genre
+</select>
+<br>
+Enter Search Term:<br>
+<input name="searchterm" type=text>
+<br>
+<input type=submit value="Search">
+</form>
+</body>
+</html>
+~                                                                                                                                                                                    
+~                                                                                                                                                                                    
+~                                                                                                                                                                                    
+~                                                                                                                                                                                    
+~                                                                                                                                                                                    
+~                                                                                                                                                                                    
+~                                                                                                                                                                                    
+~                                                                                                                                                                                    
+~                                                                                                                                                                                    
+~                                                                                                                                                                                    
+~                                                                                                                                                                                    
+~                                                                                                                                                                                    
+~                                                                                                                                                                                    
+
